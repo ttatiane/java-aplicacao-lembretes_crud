@@ -14,21 +14,39 @@ public class Main {
         emf = Persistence.createEntityManagerFactory("aplicacaoPU");
         EntityManager em = emf.createEntityManager();
 
-        // INSERÇÃO (INSERT) =======================================================================
-        Lembrete lembrete = new Lembrete();
-        lembrete.setTitulo("Comprar leite");
-        lembrete.setDescricao("Hoje, 10h30");
+//        // INSERÇÃO (INSERT) =======================================================================
+//        Lembrete lembrete = new Lembrete();
+//        lembrete.setTitulo("Comprar leite");
+//        lembrete.setDescricao("Hoje, 10h30");
+//
+//        try {
+//            em.getTransaction().begin();
+//            em.persist(lembrete);
+//            em.getTransaction().commit();
+//        } catch (Exception e) {
+//            em.getTransaction().rollback();
+//            System.out.println("INSERT: " + e.getMessage());
+//        } finally {
+//            em.close();
+//            emf.close();
+//        }
+
+        // PROJEÇÃO (SELECT) =======================================================================
+
+        List<Lembrete> lembretes = null;
 
         try {
-            em.getTransaction().begin();
-            em.persist(lembrete);
-            em.getTransaction().commit();
+            lembretes = em.createQuery("from Lembrete").getResultList();
         } catch (Exception e) {
-            em.getTransaction().rollback();
-            System.out.println("INSERT: " + e.getMessage());
+            System.out.println("LIST ALL: " + e.getMessage());
         } finally {
             em.close();
             emf.close();
+        }
+
+        // exibe resultado
+        if (lembretes != null) {
+            lembretes.forEach(System.out::println);
         }
 
     }
