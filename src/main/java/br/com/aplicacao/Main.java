@@ -31,22 +31,36 @@ public class Main {
 //            emf.close();
 //        }
 
-        // PROJEÇÃO (SELECT) =======================================================================
+//        // PROJEÇÃO (SELECT) =======================================================================
+//
+//        List<Lembrete> lembretes = null;
+//
+//        try {
+//            lembretes = em.createQuery("from Lembrete").getResultList();
+//        } catch (Exception e) {
+//            System.out.println("LIST ALL: " + e.getMessage());
+//        } finally {
+//            em.close();
+//            emf.close();
+//        }
+//
+//        // exibe resultado
+//        if (lembretes != null) {
+//            lembretes.forEach(System.out::println);
+//        }
 
-        List<Lembrete> lembretes = null;
+        // SELEÇÃO + PROJEÇÃO (SELECTION) =========================================================================
+
+        Lembrete lembrete = new Lembrete();
 
         try {
-            lembretes = em.createQuery("from Lembrete").getResultList();
+            lembrete = em.find(Lembrete.class, );
+            System.out.println(lembrete);
         } catch (Exception e) {
-            System.out.println("LIST ALL: " + e.getMessage());
+            System.out.println(e.getMessage());
         } finally {
             em.close();
             emf.close();
-        }
-
-        // exibe resultado
-        if (lembretes != null) {
-            lembretes.forEach(System.out::println);
         }
 
     }
