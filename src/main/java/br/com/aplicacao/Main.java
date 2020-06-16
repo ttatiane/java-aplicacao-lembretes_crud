@@ -63,21 +63,39 @@ public class Main {
 //            emf.close();
 //        }
 
-        // SELEÇÃO + PROJEÇÃO (SELECT FROM WHERE) ==========================================
+//        // SELEÇÃO + PROJEÇÃO (SELECT FROM WHERE) ==========================================
+//
+//        List<Lembrete> lembretes = null;
+//
+//        try {
+//            lembretes = em.createQuery("from Lembrete l where l.titulo LIKE '%comprar%'").getResultList();
+//        } catch (Exception e) {
+//            System.out.println("LIST ALL: " + e.getMessage());
+//        } finally {
+//            em.close();
+//            emf.close();
+//        }
+//
+//        if (lembretes != null) {
+//            lembretes.forEach(System.out::println);
+//        }
 
-        List<Lembrete> lembretes = null;
+        // ATUALIZAÇÃO (UPDATE) =============================================================
 
         try {
-            lembretes = em.createQuery("from Lembrete l where l.titulo LIKE '%comprar%'").getResultList();
+            Lembrete lembrete = em.find(Lembrete.class, 1L);
+
+            lembrete.setTitulo("Comprar café");
+            lembrete.setDescricao("Hoje, 8h22");
+
+            em.getTransaction().begin();
+            em.merge(lembrete);
+            em.getTransaction().commit();
         } catch (Exception e) {
-            System.out.println("LIST ALL: " + e.getMessage());
+            em.getTransaction().rollback();
+            System.out.println("UPDATE: " + e.getMessage());
         } finally {
             em.close();
-            emf.close();
-        }
-
-        if (lembretes != null) {
-            lembretes.forEach(System.out::println);
         }
 
     }
