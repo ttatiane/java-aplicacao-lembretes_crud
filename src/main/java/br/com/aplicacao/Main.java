@@ -80,22 +80,38 @@ public class Main {
 //            lembretes.forEach(System.out::println);
 //        }
 
-        // ATUALIZAÇÃO (UPDATE) =============================================================
+//        // ATUALIZAÇÃO (UPDATE) =============================================================
+//
+//        try {
+//            Lembrete lembrete = em.find(Lembrete.class, 1L);
+//
+//            lembrete.setTitulo("Comprar café");
+//            lembrete.setDescricao("Hoje, 8h22");
+//
+//            em.getTransaction().begin();
+//            em.merge(lembrete);
+//            em.getTransaction().commit();
+//        } catch (Exception e) {
+//            em.getTransaction().rollback();
+//            System.out.println("UPDATE: " + e.getMessage());
+//        } finally {
+//            em.close();
+//        }
+
+        // REMOÇÃO (DELETE) =============================================================
 
         try {
             Lembrete lembrete = em.find(Lembrete.class, 1L);
 
-            lembrete.setTitulo("Comprar café");
-            lembrete.setDescricao("Hoje, 8h22");
-
             em.getTransaction().begin();
-            em.merge(lembrete);
+            em.remove(lembrete);
             em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();
-            System.out.println("UPDATE: " + e.getMessage());
+            System.out.println("DELETE: " + e.getMessage());
         } finally {
             em.close();
+            emf.close();
         }
 
     }
