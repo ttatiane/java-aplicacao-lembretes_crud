@@ -49,18 +49,35 @@ public class Main {
 //            lembretes.forEach(System.out::println);
 //        }
 
-        // SELEÇÃO + PROJEÇÃO (SELECTION) =========================================================================
+//        // SELEÇÃO + PROJEÇÃO (SELECTION) =========================================================================
+//
+//        Lembrete lembrete = new Lembrete();
+//
+//        try {
+//            lembrete = em.find(Lembrete.class, );
+//            System.out.println(lembrete);
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//        } finally {
+//            em.close();
+//            emf.close();
+//        }
 
-        Lembrete lembrete = new Lembrete();
+        // SELEÇÃO + PROJEÇÃO (SELECT FROM WHERE) ==========================================
+
+        List<Lembrete> lembretes = null;
 
         try {
-            lembrete = em.find(Lembrete.class, );
-            System.out.println(lembrete);
+            lembretes = em.createQuery("from Lembrete l where l.titulo LIKE '%comprar%'").getResultList();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("LIST ALL: " + e.getMessage());
         } finally {
             em.close();
             emf.close();
+        }
+
+        if (lembretes != null) {
+            lembretes.forEach(System.out::println);
         }
 
     }
